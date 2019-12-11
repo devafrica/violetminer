@@ -127,7 +127,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./src/${{ steps.before_deploy.outputs.file_name }}
+          asset_path: ./build/${{ steps.before_deploy.outputs.file_name }}
           asset_name: ${{ steps.before_deploy.outputs.file_name }}
           asset_content_type: application/gzip
 
@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: ${{ steps.before_deploy.outputs.file_name }}
-          path: ./src/${{ steps.before_deploy.outputs.file_name }}
+          path: ./build/${{ steps.before_deploy.outputs.file_name }}
 
   # Mac builds on Catalina VM
   macos_build:
