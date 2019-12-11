@@ -73,9 +73,11 @@ jobs:
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
+          CUDA_HOME: '/usr/local/cuda/'
+          CUDACXX: '/usr/local/cuda/bin/nvcc'
         run: |
           mkdir build && cd build
-          cmake ..
+          cmake -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc ..
       # Build for linux
       - name: Build
         if: matrix.build_name != 'aarch64'
@@ -88,7 +90,7 @@ jobs:
         run: |
           source scripts/prep-aarch64.sh
           mkdir build && cd build
-          cmake -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc ..
+          cmake ..
           make -j2
           TARGETS="violetminer"
           ${STRIP} ${TARGETS}
