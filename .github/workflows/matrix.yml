@@ -32,8 +32,8 @@ jobs:
             label: linux
             deployable: true
           - build_name: 'Ubuntu Clang 8'
-            cc: clang-8.0
-            cxx: clang++-8.0
+            cc: clang-8
+            cxx: clang++-8
             label: linux-clang-8
             deployable: false
           - build_name: 'aarch64'
@@ -50,6 +50,7 @@ jobs:
            sudo add-apt-repository "deb http://apt.llvm.org/bionic/   llvm-toolchain-bionic-8 main"
            wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
            sudo apt-get install clang-8 libc++-8-dev
+           clang-8 --version
 
       # Fetch Dependencies
       - name: Dependencies
@@ -167,20 +168,9 @@ jobs:
           brew link --force openssl
           ln -s /usr/local/opt/openssl/include/openssl /usr/local/include
           curl -L http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_mac.dmg -o $HOME/cuda_10.1.243_mac.dmg
-          curl -L https://developer.download.nvidia.com/compute/redist/cudnn/v7.6.2/cudnn-10.1-osx-x64-v7.6.2.24.tgz -o $HOME/cudnn-10.1-osx-x64-v7.6.2.24.tgz
           hdiutil mount $HOME/cuda_10.1.243_mac.dmg
           sleep 5
-          sudo /Volumes/CUDAMacOSXInstaller/CUDAMacOSXInstaller.app/Contents/MacOS/CUDAMacOSXInstaller --accept-eula --no-window; export BREW_STATUS=$? 
-          tar xvf $HOME/cudnn-10.1-osx-x64-v7.6.2.24.tgz
-          sudo cp -r ./cuda/include/*.h /usr/local/cuda/include/
-          sudo cp -r ./cuda/lib/*.dylib /usr/local/cuda/lib/
-          sudo cp -r ./cuda/lib/*.a /usr/local/cuda/lib/
-          sudo cp -r /usr/local/cuda/lib/* /usr/local/lib/
-          sudo cp -r /usr/local/cuda/lib/libcuda.dylib /usr/local/cuda/lib/stubs/
-          for f in /usr/local/cuda/lib/*.10.dylib; do sudo ln -s $f ${f/%.10.dylib/.10.1.dylib}; done
-          cd $HOME/ccache-3.7/; ./configure; make; sudo make install; cd $TRAVIS_BUILD_DIR
-          echo 'CCACHE_CC=/usr/local/cuda/bin/nvcc /usr/local/bin/ccache compiler "$@"' | sudo tee /usr/local/cuda/bin/nvcccache
-          sudo chmod 755 /usr/local/cuda/bin/nvcccache
+          sudo /Volumes/CUDAMacOSXInstaller/CUDAMacOSXInstaller.app/Contents/MacOS/CUDAMacOSXInstaller --accept-eula --no-window
 
       # Configure project with cmake
       - name: Configure
