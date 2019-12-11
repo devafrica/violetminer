@@ -112,10 +112,10 @@ jobs:
           if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
           rm -rf violetminer-${LABEL}-${TAG}
           mkdir violetminer-${LABEL}-${TAG}
-          cp ${TARGETS} violetminer-${LABEL}-${TAG}/
+          cp -r ${TARGETS} violetminer-${LABEL}-${TAG}/
           rm -rf builds
           mkdir builds
-          cp violetminer-${LABEL}-${TAG} builds
+          cp -r violetminer-${LABEL}-${TAG} builds
           echo ::set-output name=file_name::violetminer-${LABEL}-${TAG}
       # Upload to GH Release
       - name: Upload to GH Release
@@ -183,10 +183,10 @@ jobs:
           if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
           rm -rf violetminer-${LABEL}-${TAG}
           mkdir violetminer-${LABEL}-${TAG}
-          cp ${TARGETS} violetminer-${LABEL}-${TAG}/
+          cp -r ${TARGETS} violetminer-${LABEL}-${TAG}/
           rm -rf builds
           mkdir builds
-          cp violetminer-${LABEL}-${TAG} builds
+          cp -r violetminer-${LABEL}-${TAG} builds
           echo ::set-output name=file_name::violetminer-${LABEL}-${TAG}
       # Upload to GH Release
       - name: Upload to GH Release
@@ -244,10 +244,10 @@ jobs:
           cd build
           rm -rf violetminer-${LABEL}-${TAG}
           mkdir violetminer-${LABEL}-${TAG}
-          cp violetminer.exe violetminer-${LABEL}-${TAG}
+          cp -r violetminer.exe violetminer-${LABEL}-${TAG}
           rm -rf builds
           mkdir builds
-          cp violetminer-${TAG}-${LABEL} builds
+          cp -r violetminer-${TAG}-${LABEL} builds
           echo ::set-output name=file_name::violetminer-${TAG}-${LABEL}
 
       # Upload to GH Release
