@@ -66,6 +66,7 @@ jobs:
           sudo apt clean
           CUDACXX=/usr/local/cuda/bin/nvcc
           /usr/local/cuda/bin/nvcc --version
+          echo "${CUDACXX}"
       # Configure the project with cmake
       - name: Configure
         if: matrix.build_name != 'aarch64'
@@ -87,7 +88,7 @@ jobs:
         run: |
           source scripts/prep-aarch64.sh
           mkdir build && cd build
-          cmake ..
+          cmake -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc ..
           make -j2
           TARGETS="violetminer"
           ${STRIP} ${TARGETS}
