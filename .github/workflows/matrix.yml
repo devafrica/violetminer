@@ -48,6 +48,10 @@ jobs:
       - name: Dependencies
         if: matrix.build_name != 'aarch64'
         run: |
+          CUDA_PATH="/usr/local/cuda"
+          CUDA_BIN_PATH="/usr/local/cuda/bin"
+          CUDA=10.1.243-1
+          CUDA_SHORT=10.1.243-1
           sudo apt update
           sudo apt install -y libboost-all-dev libssl-dev ${{ matrix.package_name }}
           git submodule update --init --recursive
