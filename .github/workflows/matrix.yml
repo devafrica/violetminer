@@ -64,10 +64,8 @@ jobs:
           sudo apt update -qq
           sudo apt install -y cuda
           sudo apt clean
-          CUDA_HOME=/usr/local/cuda
-          LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
-          CUDACXX=${CUDA_HOME}/bin/cuda
-          ls "${CUDA_HOME}"
+          CUDACXX=/usr/local/cuda/bin/nvcc
+          /usr/local/cuda/bin/nvcc --version
       # Configure the project with cmake
       - name: Configure
         if: matrix.build_name != 'aarch64'
