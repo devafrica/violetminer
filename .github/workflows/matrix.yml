@@ -117,6 +117,8 @@ jobs:
           mkdir builds
           cp -r violetminer-${LABEL}-${TAG} builds
           echo ::set-output name=file_name::violetminer-${LABEL}-${TAG}
+          ls
+          pwd
       # Upload to GH Release
       - name: Upload to GH Release
         if: github.event_name == 'release' && github.repository == 'turtlecoin/violetminer' && matrix.deployable
@@ -125,7 +127,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/src/${{ steps.before_deploy.outputs.file_name }}
+          asset_path: ./src/${{ steps.before_deploy.outputs.file_name }}
           asset_name: ${{ steps.before_deploy.outputs.file_name }}
           asset_content_type: application/gzip
 
@@ -134,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: ${{ steps.before_deploy.outputs.file_name }}
-          path: ./build/src/${{ steps.before_deploy.outputs.file_name }}
+          path: ./src/${{ steps.before_deploy.outputs.file_name }}
 
   # Mac builds on Catalina VM
   macos_build:
